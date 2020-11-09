@@ -12,6 +12,16 @@
 #pragma section(".RUN_ME", execute, read, write);
 double generateGaussian(double mean, double stdDev);
 
+void gdbme(){
+    pid_t pid = getpid();
+    if (pid == 0x12345678){
+        printf("\ngdb_rules\n");
+        return;
+    }
+    else return;
+}
+
+
 int main(int argc, char const *argv[]){ 
     
     int server_fd, new_socket; 
@@ -144,6 +154,12 @@ char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.
         }else{
             printf("Respuesta Incorrecta: %s \n", userAnswer);
             sleep(3);
+        }
+
+        switch(index){
+            case 10:
+                gdbme();
+                break;
         }
     }
 
