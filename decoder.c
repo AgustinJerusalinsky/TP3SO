@@ -50,14 +50,13 @@ int main(int argc, char const *argv[])
 
 
 
-
-
-
     // char * answers[]= {"entendido\n","itba\n","M4GFKZ289aku\n","fk3wfLCm3QvS\n","too_easy\n",".RUN_ME\n","K5n2UFfpFMUN\n","BUmyYq5XxXGt\n","u^v\n","chin_chu_lan_cha\n","gdb_rules\n","normal\n",0};
     // char ** ans = answers;
-    // while(*ans!=0){
+    // int top = 0;
+    // while(*ans!=0 && top < 1){
     //     send(sock , *ans , strlen(*ans) , 0 );
     //     ans++;
+    //     top++;
     // } 
     while(1){
         n=getline(&input,&size,stdin);  

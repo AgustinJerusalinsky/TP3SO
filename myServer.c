@@ -5,16 +5,19 @@
 #include <stdlib.h> 
 #include <netinet/in.h> 
 #include <string.h> 
+
+#define NUMS 30
+
 #define PORT 8080 
 #pragma section(".RUN_ME", execute, read, write);
+double generateGaussian(double mean, double stdDev);
+
 int main(int argc, char const *argv[]){ 
     
     int server_fd, new_socket; 
     struct sockaddr_in address; 
     int opt = 1; 
     int addrlen = sizeof(address); 
-    system("clear");
-    //system("COLOR 02");
     // Creating socket file descriptor 
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) 
     { 
@@ -50,6 +53,7 @@ int main(int argc, char const *argv[]){
         perror("accept"); 
         exit(EXIT_FAILURE); 
     }
+    system("clear");
     char * challengeHeader="------------- DESAFIO -------------";
     char * questionHeader="----- PREGUNTA PARA INVESTIGAR -----";
     char * initMessage = "Bienvenidos al TP3 y felicitaciones, ya resolvieron el primer acertijo.\n\n"
@@ -79,7 +83,7 @@ int main(int argc, char const *argv[]){
 
     
 char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.co/tc0Hb6w", "EBADF... \n write: Bad file descriptor", "respuesta = strings:277",
-    ".data .bss .comment ? .shstrtab .symtab .strtab", "Filter error", "¿? \n La respuesta es BUmyYq5XxXGt", "Latexme \n Si \n \\mathrm{d}y = u^v{\\cdot}(v'{\\cdot}\\ln{(u)}+v{\\cdot}\frac{u'}{u}) \n entonces \n y = ",
+    ".data .bss .comment ? .shstrtab .symtab .strtab", "Filter error", "¿? \n\n\x1b[30;40mLa respuesta es BUmyYq5XxXGt\033[0m", "Latexme \n Si \n \\mathrm{d}y = u^v{\\cdot}(v'{\\cdot}\\ln{(u)}+v{\\cdot}\frac{u'}{u}) \n entonces \n y = ",
     "libre", "b gdbme y encontrá el valor mágico\n\nENTER para reintentar.","me conoces" };
 
     char * questions[]={
@@ -97,25 +101,38 @@ char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.
         "¿Fue divertido?",
     };
     char command[1024];
-    char userAnswer[512] = {0};
+    size_t size = 512;
+    char * userAnswer = malloc(size);
     char hash[1024] = {0}; 
     unsigned int len; 
     unsigned int index = 0;
+    char answer3[]={'L','a',' ','r','e','s','p','u','e','s','t','a',' ','e','s',' ','f','k','3','w','f','L','C','m','3','Q','v','S'};
+
+    FILE * client = fdopen(new_socket,"r");
+
     while(index<=12){
         system("clear");
-
+         printf("%s\n%s\n",challengeHeader,challenges[index]);
         switch (index){
-        case 3:
-            write(14,"La respuesta es fk3wfLCm3QvS",29);
-            break;
-        
-        default:
-            break;
+            case 3:
+                write(14,answer3,29);
+                break;  
+            case 6:
+                break;
+            case 11:
+                for(int i=0; i<NUMS ; i++){
+                    printf("%f ", generateGaussian(0,1));
+                }
+                printf("\n");
+                break;
+
+            default:
+                break;
         }
 
 
-        printf("%s\n%s\n%s\n%s\n",challengeHeader,challenges[index],questionHeader,questions[index]);
-        len = read( new_socket , userAnswer, 1024);
+        printf("%s\n%s\n",questionHeader,questions[index]);
+        len = getline(&userAnswer,&size,client);
         userAnswer[len-1]=0; 
         sprintf(command,"echo -n %s | md5sum | sed 's/  -//g'",userAnswer);
         FILE * proc = popen(command,"r");
