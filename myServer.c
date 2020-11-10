@@ -11,6 +11,7 @@
 #define PORT 8080 
 #pragma section(".RUN_ME", execute, read, write);
 double generateGaussian(double mean, double stdDev);
+int quineValidator();
 
 void gdbme(){
     pid_t pid = getpid();
@@ -94,7 +95,7 @@ int main(int argc, char const *argv[]){
     
 char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.co/tc0Hb6w", "EBADF... \n write: Bad file descriptor", "respuesta = strings:277",
     ".data .bss .comment ? .shstrtab .symtab .strtab", "Filter error", "¿? \n\n\x1b[30;40mLa respuesta es BUmyYq5XxXGt\033[0m", "Latexme \n Si \n \\mathrm{d}y = u^v{\\cdot}(v'{\\cdot}\\ln{(u)}+v{\\cdot}\frac{u'}{u}) \n entonces \n y = ",
-    "libre", "b gdbme y encontrá el valor mágico\n\nENTER para reintentar.","me conoces" };
+    "quine", "b gdbme y encontrá el valor mágico\n\nENTER para reintentar.","me conoces" };
 
     char * questions[]={
         "¿Cómo descubrieron el protocolo, la dirección y el puerto para conectarse?",
@@ -117,6 +118,8 @@ char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.
     unsigned int len; 
     unsigned int index = 0;
     char answer3[]={'L','a',' ','r','e','s','p','u','e','s','t','a',' ','e','s',' ','f','k','3','w','f','L','C','m','3','Q','v','S'};
+    char answer6[]={'L','a',' ','r','e','s','p','u','e','s','t','a',' ','e','s',' ','K','5','n','2','U','F','f','p','F','M','U','N',};
+    char answer9[]={'L','a',' ','r','e','s','p','u','e','s','t','a',' ','e','s',' ','c','h','i','n','_','c','h','u','_','l','a','n','_','c','h','a','\n','\n',};
 
     FILE * client = fdopen(new_socket,"r");
 
@@ -128,6 +131,21 @@ char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.
                 write(14,answer3,29);
                 break;  
             case 6:
+                printf("\n%s",answer6);
+                fflush(stdout);
+                fprintf(stderr,"\r");
+                for(int i = 0; i < 50;i++)fprintf(stderr,"%c",rand()%90 + 32);
+                fflush(stderr);
+                printf("\n\n\n");
+                break;
+            case 9:
+
+                if(quineValidator() != 0){
+                    printf("%s",answer9);
+                }else{
+                    printf("ENTER para reintentar.\n");
+                }
+
                 break;
             case 11:
                 for(int i=0; i<NUMS ; i++){
