@@ -1,4 +1,3 @@
-// Server side C/C++ program to demonstrate Socket programming 
 #include <unistd.h> 
 #include <stdio.h> 
 #include <sys/socket.h> 
@@ -9,7 +8,7 @@
 #define NUMS 30
 
 #define PORT 8080 
-#pragma section(".RUN_ME", execute, read, write);
+
 double generateGaussian(double mean, double stdDev);
 int quineValidator();
 
