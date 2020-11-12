@@ -3,7 +3,7 @@
 #include <strings.h>
 
 
-int main(){
+int main2(){
     size_t size = 1024;
     int n;
     char * input = malloc(size);
@@ -22,7 +22,7 @@ int main(){
 }
 
 
-int main2(){
+int main(){
     size_t size = 1024;
     int n;
     char * input = malloc(size);
@@ -40,4 +40,5 @@ int main2(){
         offset += sprintf(output+offset,"};");
         printf("%s\n",output);
     } 
+    free(input);
 }

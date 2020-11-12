@@ -13,9 +13,8 @@ char * stringsAns = "too_easy";
 
 double generateGaussian(double mean, double stdDev);
 int quineValidator();
-
+char gdbme_buffer[]={'\n','g','d','b','_','r','u','l','e','s','\n'};
 void gdbme(){
-    char gdbme_buffer[]={'\n','g','d','b','_','r','u','l','e','s','\n'};
     pid_t pid = getpid();
     if (pid == 0x12345678){
         printf("%s",gdbme_buffer);
@@ -31,14 +30,12 @@ int main(int argc, char const *argv[]){
     struct sockaddr_in address; 
     int opt = 1; 
     int addrlen = sizeof(address); 
-    // Creating socket file descriptor 
     if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0) 
     { 
         perror("socket failed"); 
         exit(EXIT_FAILURE); 
     } 
     
-    // Forcefully attaching socket to the port 8080 
     if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT, &opt, sizeof(opt))) 
     { 
         perror("setsockopt"); 
@@ -48,7 +45,6 @@ int main(int argc, char const *argv[]){
     address.sin_addr.s_addr = INADDR_ANY; 
     address.sin_port = htons( PORT ); 
        
-    // Forcefully attaching socket to the port 8080 
     if (bind(server_fd, (struct sockaddr *)&address,  
                                  sizeof(address))<0) 
     { 
@@ -95,7 +91,7 @@ int main(int argc, char const *argv[]){
     };
 
     
-char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.co/tc0Hb6w", "EBADF... \n write: Bad file descriptor", "respuesta = strings:41",
+char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.co/tc0Hb6w", "EBADF... \n write: Bad file descriptor", "strings:43",
     ".text .fini .rodata ? .eh_frame_hdr .eh_frame .init_array", "Filter error", "¿? \n\n\x1b[30;40mLa respuesta es BUmyYq5XxXGt\033[0m", "Latexme \n Si \n \\mathrm{d}y = u^v{\\cdot}(v'{\\cdot}\\ln{(u)}+v{\\cdot}\\frac{u'}{u}) \n entonces \n y = ",
     "quine", "b gdbme y encontrá el valor mágico\n\nENTER para reintentar.","me conoces" };
 
@@ -163,6 +159,7 @@ char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.
 
         printf("%s\n%s\n",questionHeader,questions[index]);
         len = getline(&userAnswer,&size,client);
+        if(len==-1)return 0;
         userAnswer[len-1]=0; 
         sprintf(command,"echo -n %s | md5sum | sed 's/  -//g'",userAnswer);
         FILE * proc = popen(command,"r");
@@ -183,8 +180,9 @@ char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.
         }
     }
 
-
-
+    free(userAnswer);
+    fclose(client);
+    close(server_fd);
 
     return 0; 
 } 
