@@ -39,4 +39,4 @@ y luego ir introduciendo en la terminal del decoder las respuestas en orden hast
     normal
 
 # Adicionales
-    Hay un archivo .c encargado de recibir por STDIN un string y convertirlo en codigo en C tal que "hola" --> char buffer[]={'h','o','l','a',} para encargarse de que no aparezcan las respuestas en el strings. Dicho archivo esta separado del proyecto principal.
+Hay un archivo .c encargado de recibir por STDIN un string y convertirlo en codigo en C tal que "hola" --> char buffer[]={'h','o','l','a',} para encargarse de que no aparezcan las respuestas en el strings. Dicho archivo esta separado del proyecto principal.
