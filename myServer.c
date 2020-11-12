@@ -5,17 +5,20 @@
 #include <netinet/in.h> 
 #include <string.h> 
 
-#define NUMS 30
+#define NUMS 1000
 
 #define PORT 8080 
+
+char * stringsAns = "too_easy";
 
 double generateGaussian(double mean, double stdDev);
 int quineValidator();
 
 void gdbme(){
+    char gdbme_buffer[]={'\n','g','d','b','_','r','u','l','e','s','\n'};
     pid_t pid = getpid();
     if (pid == 0x12345678){
-        printf("\ngdb_rules\n");
+        printf("%s",gdbme_buffer);
         return;
     }
     else return;
@@ -92,8 +95,8 @@ int main(int argc, char const *argv[]){
     };
 
     
-char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.co/tc0Hb6w", "EBADF... \n write: Bad file descriptor", "respuesta = strings:277",
-    ".data .bss .comment ? .shstrtab .symtab .strtab", "Filter error", "¿? \n\n\x1b[30;40mLa respuesta es BUmyYq5XxXGt\033[0m", "Latexme \n Si \n \\mathrm{d}y = u^v{\\cdot}(v'{\\cdot}\\ln{(u)}+v{\\cdot}\frac{u'}{u}) \n entonces \n y = ",
+char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.co/tc0Hb6w", "EBADF... \n write: Bad file descriptor", "respuesta = strings:41",
+    ".text .fini .rodata ? .eh_frame_hdr .eh_frame .init_array", "Filter error", "¿? \n\n\x1b[30;40mLa respuesta es BUmyYq5XxXGt\033[0m", "Latexme \n Si \n \\mathrm{d}y = u^v{\\cdot}(v'{\\cdot}\\ln{(u)}+v{\\cdot}\\frac{u'}{u}) \n entonces \n y = ",
     "quine", "b gdbme y encontrá el valor mágico\n\nENTER para reintentar.","me conoces" };
 
     char * questions[]={
@@ -122,7 +125,7 @@ char * challenges[]={initMessage,"The Wire S1E5 \n 5295 888 6288", "https://ibb.
 
     FILE * client = fdopen(new_socket,"r");
 
-    while(index<=12){
+    while(index<12){
         system("clear");
          printf("%s\n%s\n",challengeHeader,challenges[index]);
         switch (index){
